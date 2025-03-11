@@ -1,0 +1,61 @@
+* {
+    font-family: "Montserrat", serif;
+    font-style: normal;
+}
+
+.sidebar {
+    background-color: #2a425b !important;
+    color: #fff;
+}
+
+.sidebar-link {
+    color: #fff;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+    background-color: #fff;
+    color: #293037;
+}
+
+.dashbtn {
+    background-color: #293037;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1);
+    border-radius: .4rem;
+}
+
+.dashbtn:hover {
+    transform: scale(1.05);
+    transition: all .3s;
+    background: #2a425b;
+}
+
+.analytics table {
+    margin: 1rem;
+}
+
+td, tr, th {
+    text-align: left;
+    padding: 0.4rem;
+}
+
+.analytics h3 {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.time-frame-selector, .date-range-selector {
+    margin-left: 0.5rem;
+}
+
+.time-frame-selector input, .date-range-selector input {
+    border-radius: .2rem;
+    margin-left: 0.5rem;
+}

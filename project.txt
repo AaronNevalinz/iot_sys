@@ -1,0 +1,82 @@
+cross reference the data available, database structures and dashboards to see if it fits the project description below:
+
+
+Product Requirements Document (PRD) for IoT Application
+1. Overview
+This PRD specifies the requirements for an IoT application focused on monitoring and managing submersible pump systems. The application will offer functionalities like historical data analysis, device management, and real-time monitoring.
+
+2. Key Features
+2.1 Overview Dashboard (Historical Data)
+Purpose: To provide a comprehensive view of historical performance data for each device registered under a user's account.
+
+Core Functionality:
+Data Display:
+Show metrics like efficiency, voltage stability, current, temperature, RPM, and power output. Include average values for each parameter.
+Filtering Options:
+Time Frames: Day, Week, Month, Year.
+Custom Date Range: Users can input specific start and end dates for detailed analysis.
+Data Visualization:
+Use dynamic graphs and charts that adjust according to the selected time frame.
+Device Identification:
+Ensure all data is linked to devices via unique serial numbers for precise tracking.
+
+2.2 Device List Page
+Purpose: To offer an organized interface for managing and accessing devices.
+
+Core Functionality:
+Device Listing:
+List all devices with their serial numbers.
+Navigation:
+Quick links to individual device dashboards and historical data.
+Search and Filter:
+Search: By device name.
+Filter: By device serial number.
+
+2.3 Individual Device Dashboard (Real-Time Monitoring)
+Purpose: To provide real-time operational insights into each active device.
+
+Core Functionality:
+Real-Time Data:
+Update live metrics including:
+RPM and efficiency.
+Voltage stability, power output.
+Device and ambient temperatures.
+Phase voltages (L1, L2, L3) with average calculations.
+Panel voltage and solar power input.
+Visual Alerts:
+Indicators for:
+Overvoltage (OV)
+Undervoltage (UV)
+Control Features:
+An ON/OFF toggle for device control.
+Trend Analysis:
+Interactive graphs showing trends in RPM, power, and voltage stability.
+
+3. Technical Requirements
+Scalability: The system must handle an increasing number of devices without performance degradation.
+Security: Implement robust data encryption for all communications and ensure user authentication for device access.
+Compatibility: Support for multiple device types (iOS, Android, Web browsers).
+Data Storage: Efficient storage solutions for managing and archiving large datasets of historical data.
+API: Develop RESTful APIs for integration with other systems or for future enhancements.
+
+4. User Experience (UX) Considerations
+Intuitive Interface: Design for ease of use, ensuring that even non-technical users can navigate and use the system effectively.
+Accessibility: Compliance with WCAG guidelines for accessibility.
+Performance: Fast load times for real-time data and seamless transitions between different views.
+
+5. Performance Metrics
+Response Time: Real-time data updates should occur within 2 seconds.
+Accuracy: Data should be accurate to within ±1% of actual readings.
+Uptime: Aim for 99.9% uptime for the service.
+
+6. Development Timeline
+Phase 1: Core functionality for device listing and basic historical data (3 months).
+Phase 2: Real-time monitoring dashboard implementation (2 months).
+Phase 3: Advanced features like custom date range filters, enhanced data visualization, and device control (3 months).
+
+7. Testing
+Unit Testing: For individual components.
+Integration Testing: To ensure all parts of the system work together.
+User Acceptance Testing (UAT): With a select group of users to validate the system meets user needs.
+
+@Codebase 
