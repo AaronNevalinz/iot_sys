@@ -46,7 +46,19 @@ class MqttSubscriber extends Command
             $mqtt->subscribe($topic, function (string $topic, string $message) {
                 Log::info("MQTT Message Received: Topic: $topic, Message: $message");
                 
-                $data = \json_decode($message, true);
+                // fix the JSON formatting manually
+                $fixedJson = preg_replace([
+                    '/(\w+):/', // Add double quotes around keys
+                    '/:(\w+)(?=[,\s}])/' // Wrap non-numeric values (like "WOU484") in quotes
+                ], ['"$1":', ':"$1"', ':"$1"'], $message);
+
+                // Decode JSON
+                $data = json_decode($fixedJson, true);
+
+                // $formattedMessage = preg_replace('/(\w+):/', '"$1":', $message);
+                // $data = json_decode($formattedMessage, true);
+
+                Log::info("MQTT Subscriber: Fixed JSON: " . $fixedJson);
 
                 if (!$data) {
                     Log::error("MQTT Subscriber: Invalid JSON received. Error: " . json_last_error_msg());
@@ -60,23 +72,22 @@ class MqttSubscriber extends Command
 
                 try{
                     DeviceAnalytics::create([
-                        'device_id' => $data['device_id'],
-                        'recorded_at' => now(),
-                        'voltage' => $data['voltage'],
-                        'max_voltage' => $data['max_voltage'],
-                        'min_voltage' => $data['min_voltage'],
-                        'current' => $data['current'],
+                        'device_id' => $data['id'],
+                        'voltage' => $data['v'],
+                        'max_voltage' => $data['v_max'],
+                        'min_voltage' => $data['v_min'],
+                        'current' => $data['i'],
                         'rpm' => $data['rpm'],
-                        'efficiency' => $data['efficiency'],
-                        'power_output' => $data['power_output'],
-                        'phase_voltage_l1' => $data['phase_voltage_l1'],
-                        'phase_voltage_l2' => $data['phase_voltage_l2'],
-                        'phase_voltage_l3' => $data['phase_voltage_l3'],
-                        'panel_voltage' => $data['panel_voltage'],
-                        'solar_power_input' => $data['solar_power_input'],
-                        'ambient_temperature' => $data['ambient_temperature'],
-                        'temperature' => $data['temperature'],
-                        'error_code' => $data['error_code'],
+                        'efficiency' => $data['eff'],
+                        'power_output' => $data['p_out'],
+                        'phase_voltage_l1' => $data['v_l1'],
+                        'phase_voltage_l2' => $data['v_l2'],
+                        'phase_voltage_l3' => $data['v_l3'],
+                        'panel_voltage' => $data['v_p'],
+                        'solar_power_input' => $data['p_s'],
+                        'ambient_temperature' => $data['t_amb'],
+                        'temperature' => $data['t'],
+                        'error_code' => $data['err'],
                     ]);
     
                     Log::info("MQTT Subscriber: Data saved successfully.");
