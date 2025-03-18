@@ -153,6 +153,12 @@ Basically that's it. Supervisor is the only thing that we adding, and also it's 
 
 To test you have to install mosquitto_cli, which will help you to test it on you machine, where you can publish data to that topic, and see for yourself how it is being saved to the database.
 
+For instance: you can publish as below using mosquitto_cli
+
+```
+mosquitto_pub -h broker.hivemq.com -p 1883 -t iot/device12aaron -m  "{id:1,v:241.66,v_max:220.71,v_min:222.13,i:8.46,rpm:1462.71,eff:6.59,p_out:159.53,v_l1:246.38,v_l2:229.67,v_l3:242.03,v_p:229.89,p_s:192.69,t_amb:20.89,t:28.68,err:WOU484}"
+```
+
 I HOPE THIS HELPS YOU SET IT ALL UP.
 
 AARON.
