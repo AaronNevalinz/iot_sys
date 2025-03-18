@@ -30,7 +30,7 @@ class MqttSubscriber extends Command
      */
     public function handle()
     {
-        // HiveMQ Public Broker (No TLS, No Auth)
+        // HiveMQ Public Broker (No TLS, No Auth needed)
         $host = 'broker.hivemq.com';
         $port = 1883;
         $topic = 'iot/device12aaron';
