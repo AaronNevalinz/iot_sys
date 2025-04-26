@@ -32,26 +32,26 @@ class MqttSubscriber extends Command
     {
 
 
-        // $host = '157.230.113.253';
-        // $port = 1883;
-        // $topic = "Test";
-        // $username = 'hassan';
-        // $passwd = 'ha55an';
+        $host = '157.230.113.253';
+        $port = 1883;
+        $topic = "Test";
+        $username = 'hassan';
+        $passwd = 'ha55an';
 
 
 
 
         // //  custom mosquitto broker
-        $host = "localhost";
-        $port = 1883;
-        $topic = "iot/device12aaron";
+        // $host = "localhost";
+        // $port = 1883;
+        // $topic = "iot/device12aaron";
 
 
         // Initialize MQTT Client
         $mqtt = new MqttClient($host, $port, $topic);
-        $connectionSettings = (new ConnectionSettings());
-            // ->setUsername($username)
-            // ->setPassword($passwd);
+        $connectionSettings = (new ConnectionSettings())
+            ->setUsername($username)
+            ->setPassword($passwd);
 
         try {
             $mqtt->connect($connectionSettings, true);
