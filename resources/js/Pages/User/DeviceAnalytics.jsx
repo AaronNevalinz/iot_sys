@@ -94,7 +94,6 @@ const DeviceAnalytics = ({ device, analytics }) => {
         efficiency: filterDataByDateRange(analytics.efficiency || []),
         voltage_stability: filterDataByDateRange(analytics.voltage_stability || []),
         temperature: filterDataByDateRange(analytics.temperature || []),
-        voltage: filterDataByDateRange(analytics.voltage || []),
         power_output: filterDataByDateRange(analytics.power_output || []),
         rpm: filterDataByDateRange(analytics.rpm || []),
         timestamp: filterDataByDateRange(analytics.timestamp || []),
@@ -153,20 +152,6 @@ const DeviceAnalytics = ({ device, analytics }) => {
         ],
     };
 
-    // Prepare voltage against time data
-    const voltageTimeData = {
-        labels: filteredAnalytics.timestamp.map((ts) => new Date(ts).toLocaleDateString()),
-        datasets: [
-            {
-                label: "Voltage vs Time",
-                data: filteredAnalytics.voltage || [],
-                backgroundColor: "rgba(153,102,255,0.6)",
-                borderColor: "rgba(153,102,255,1)",
-                fill: false,
-            },
-        ],
-    };
-
     // Prepare power and RPM against time data
     const powerRPMData = {
         labels: filteredAnalytics.timestamp.map((ts) =>
@@ -189,6 +174,8 @@ const DeviceAnalytics = ({ device, analytics }) => {
             },
         ],
     };
+
+    console.log("Filtered Analytics for Table:", filteredAnalytics);
 
     return (
         <>
@@ -226,7 +213,7 @@ const DeviceAnalytics = ({ device, analytics }) => {
                 </div>
                 <div className="average-values">
                     <p>Average Efficiency: {averageEfficiency.reduce((a, b) => a + b, 0) / averageEfficiency.length}</p>
-                    <p>Average Voltage Stability: {averageVoltageStability.reduce((a, b) => a + b, 0) / averageVoltageStability.length}</p>
+                    {/* <p>Average Voltage Stability: {averageVoltageStability.reduce((a, b) => a + b, 0) / averageVoltageStability.length}</p> */}
                 </div>
                 {user.role === "admin" && (
                     <table className="table-auto divide-y divide-gray-200">
@@ -245,9 +232,6 @@ const DeviceAnalytics = ({ device, analytics }) => {
                                 </th>
                                 <th className="border border-slate-600">RPM</th>
                                 <th className="border border-slate-600">
-                                    Voltage (V)
-                                </th>
-                                <th className="border border-slate-600">
                                     Current (A)
                                 </th>
                                 <th className="border border-slate-600">
@@ -259,7 +243,7 @@ const DeviceAnalytics = ({ device, analytics }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredAnalytics.voltage.map((voltage, index) => {
+                            {filteredAnalytics.timestamp.map((_, index) => {
                                 const dateObj = new Date(
                                     filteredAnalytics.timestamp[index]
                                 );
@@ -293,9 +277,6 @@ const DeviceAnalytics = ({ device, analytics }) => {
                                         </td>
                                         <td className="border border-slate-600">
                                             {rpm}
-                                        </td>
-                                        <td className="border border-slate-600">
-                                            {voltage}
                                         </td>
                                         <td className="border border-slate-600">
                                             {current}
@@ -334,13 +315,6 @@ const DeviceAnalytics = ({ device, analytics }) => {
                             Average Device Temperature
                         </h3>
                         <Bar data={temperatureData} />
-                    </div>
-
-                    <div>
-                        <h3 className="text-lg font-semibold">
-                            Voltage vs Time
-                        </h3>
-                        <Line data={voltageTimeData} />
                     </div>
 
                     <div>

@@ -30,18 +30,32 @@ class MqttSubscriber extends Command
      */
     public function handle()
     {
-        // HiveMQ Public Broker (No TLS, No Auth needed)
-        $host = 'broker.hivemq.com';
+
+
+        // $host = '157.230.113.253';
+        // $port = 1883;
+        // $topic = "Test";
+        // $username = 'hassan';
+        // $passwd = 'ha55an';
+
+
+
+
+        // //  custom mosquitto broker
+        $host = "localhost";
         $port = 1883;
-        $topic = 'iot/device12aaron';
+        $topic = "iot/device12aaron";
+
 
         // Initialize MQTT Client
-        $mqtt = new MqttClient($host, $port, 'Laravel_app');
-        $connectionSettings = new ConnectionSettings();
+        $mqtt = new MqttClient($host, $port, $topic);
+        $connectionSettings = (new ConnectionSettings());
+            // ->setUsername($username)
+            // ->setPassword($passwd);
 
         try {
             $mqtt->connect($connectionSettings, true);
-            Log::info("Connected to MQTT broker on HiveMQ");
+            Log::info("Connected to Custom broker on port: $port" );
 
             $mqtt->subscribe($topic, function (string $topic, string $message) {
                 Log::info("MQTT Message Received: Topic: $topic, Message: $message");
@@ -67,24 +81,30 @@ class MqttSubscriber extends Command
 
                 Log::info("MQTT Subscriber: Data received: " . json_encode($data));
 
+                // calculate the power output
+                $power_output = $data['v_p'] * $data['i'];
+                
+                // Calculate efficiency: (P_out / P_in) * 100
+                $efficiency = ($data['v_s'] > 0) ? ($power_output / $data['v_s']) * 100 : 0;
+                
+                Log::info("Calculated Power Output: $power_output W, Efficiency: $efficiency %");
                 
 
 
                 try{
                     DeviceAnalytics::create([
                         'device_id' => $data['id'],
-                        'voltage' => $data['v'],
                         'max_voltage' => $data['v_max'],
                         'min_voltage' => $data['v_min'],
                         'current' => $data['i'],
                         'rpm' => $data['rpm'],
-                        'efficiency' => $data['eff'],
-                        'power_output' => $data['p_out'],
+                        'efficiency' => $efficiency,
+                        'power_output' => $power_output,
                         'phase_voltage_l1' => $data['v_l1'],
                         'phase_voltage_l2' => $data['v_l2'],
                         'phase_voltage_l3' => $data['v_l3'],
                         'panel_voltage' => $data['v_p'],
-                        'solar_power_input' => $data['p_s'],
+                        'solar_power_input' => $data['v_s'],
                         'ambient_temperature' => $data['t_amb'],
                         'temperature' => $data['t'],
                         'error_code' => $data['err'],
@@ -94,6 +114,10 @@ class MqttSubscriber extends Command
                 } catch(Exception $e) {
                     Log::error("MQTT Subscriber: Error saving data to database. Error: " . $e->getMessage());
                 }
+
+
+
+                
             }, 0);
 
             // Handle graceful shutdown

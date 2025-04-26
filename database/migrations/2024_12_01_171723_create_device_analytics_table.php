@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     /**
@@ -15,7 +16,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('device_id')->constrained('devices')->onDelete('cascade');
             $table->timestamp('recorded_at')->useCurrent();
-            $table->float('voltage')->nullable();
             $table->float('max_voltage')->nullable();
             $table->float('min_voltage')->nullable();
             $table->float('current')->nullable();

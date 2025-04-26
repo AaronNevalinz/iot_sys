@@ -71,7 +71,6 @@ class DeviceController extends Controller
         $deviceData = DeviceAnalytics::where('device_id', $id)->get();
 
         $analytics = [
-            'voltage' => [],
             'current' => [],
             'temperature' => [],
             'efficiency' => [],
@@ -84,7 +83,6 @@ class DeviceController extends Controller
         ];
 
         foreach ($deviceData as $data) {
-            $analytics['voltage'][] = $data->voltage;
             $analytics['current'][] = $data->current;
             $analytics['temperature'][] = $data->temperature;
             $analytics['efficiency'][]=$data->efficiency;
