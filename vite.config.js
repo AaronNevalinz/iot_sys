@@ -3,10 +3,17 @@ import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-    base: 'https://iot-system-core-71c7166e874b.herokuapp.com/',
+    server: {
+        https: true,
+    },
+    build: {
+        manifest: true,
+        outDir: "public/build",
+    },
+    base: "/build/",
     plugins: [
         laravel({
-            input: 'resources/js/app.jsx',
+            input: "resources/js/app.jsx",
             refresh: true,
         }),
         react(),
