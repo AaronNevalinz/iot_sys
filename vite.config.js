@@ -3,14 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-    server: {
-        https: true,
-    },
-    build: {
-        manifest: true,
-        outDir: "public/build",
-    },
-    base: "/build/",
+    base: process.env.ASSET_URL + "/",
     plugins: [
         laravel({
             input: "resources/js/app.jsx",
