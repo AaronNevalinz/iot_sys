@@ -39,12 +39,10 @@ class MqttSubscriber extends Command
         $passwd = 'ha55an';
 
 
-
-
-        // //  custom mosquitto broker
-        // $host = "localhost";
-        // $port = 1883;
-        // $topic = "iot/device12aaron";
+        //  custom mosquitto broker
+        $host = "localhost";
+        $port = 1883;
+        $topic = "iot/device12aaron";
 
 
         // Initialize MQTT Client
@@ -114,9 +112,6 @@ class MqttSubscriber extends Command
                 } catch(Exception $e) {
                     Log::error("MQTT Subscriber: Error saving data to database. Error: " . $e->getMessage());
                 }
-
-
-
                 
             }, 0);
 
